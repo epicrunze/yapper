@@ -12,24 +12,15 @@ dependencies = [
     "jupyter>=1.1.1",
     "matplotlib>=3.10.7",
     "mwparserfromhell>=0.7.2",
+    "nltk>=3.9.2",
     "numpy>=2.2.6",
     "pandas>=2.3.3",
     "python-slugify>=8.0.4",
     "scikit-learn>=1.7.2",
     "semchunk>=3.2.5",
     "tokenizers>=0.22.1",
-    "torch>=2.8.0",
-    "torchvision>=0.24.0",
     "tqdm>=4.67.1",
     "transformers==4.56.2",
-    "triton>=3.4.0",
-    "triton-kernels",
-    "trl==0.22.2",
-    "unsloth-zoo[base]",
-    "unsloth[base]",
+    "unsloth>=2025.11.2",
+    "vllm>=0.11.0",
 ]
-
-[tool.uv.sources]
-unsloth-zoo = { git = "https://github.com/unslothai/unsloth-zoo" }
-unsloth = { git = "https://github.com/unslothai/unsloth" }
-triton-kernels = { git = "https://github.com/triton-lang/triton.git", subdirectory = "python/triton_kernels", rev = "05b2c186c1b6c9a08375389d5efe9cb4c401c075" }
