@@ -326,7 +326,7 @@ def recontruct_input(output):
         top_p=0.8,
         top_k=20,
         min_p=0.0,
-        max_new_tokens = 784,
+        max_new_tokens = 1024,
     )
 
     reconstructed_tokens = resp[:, inputs["input_ids"].shape[1]:]
@@ -422,17 +422,17 @@ training_args = GRPOConfig(
     max_prompt_length = max_prompt_length,
     max_completion_length = max_completion_length,
     # num_train_epochs = 1, # Set to 1 for a full training run
-    max_steps = 1500,
+    max_steps = 1000,
     save_steps = 50,
     report_to = "none", # Can use Weights & Biases
     output_dir = "/hpc/home/bfa6/work/github/yapper/results/test5/output",
 
     # For optional training + evaluation
-    fp16_full_eval = True,
-    per_device_eval_batch_size = 4,
-    eval_accumulation_steps = 1,
-    eval_strategy = "steps",
-    eval_steps = 50,
+    # fp16_full_eval = True,
+    # per_device_eval_batch_size = 4,
+    # eval_accumulation_steps = 1,
+    # eval_strategy = "steps",
+    # eval_steps = 300,
 )
 
 
@@ -453,7 +453,7 @@ trainer = GRPOTrainer(
 
     # For optional training + evaluation
     train_dataset = trainset,
-    eval_dataset = evalset,
+    # eval_dataset = evalset,
 )
 trainer.train()
 
