@@ -360,7 +360,8 @@ def get_length_reward(original, compressed):
     len_original = get_num_tokens(original)
     len_compressed = get_num_tokens(compressed)
     
-    r = (len_original - len_compressed) * (1/len_original)
+    # r = (len_original - len_compressed) * (1/len_original)
+    r = np.clip((len_original - len_compressed) * (2/len_original), -1, 1)
 
     return r
     
