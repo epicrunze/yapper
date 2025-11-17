@@ -6778,6 +6778,7 @@ dependencies = [
     { name = "tokenizers" },
     { name = "tqdm" },
     { name = "transformers" },
+    { name = "trl" },
     { name = "unsloth" },
     { name = "vllm" },
 ]
@@ -6800,6 +6801,7 @@ requires-dist = [
     { name = "tokenizers", specifier = ">=0.22.1" },
     { name = "tqdm", specifier = ">=4.67.1" },
     { name = "transformers", specifier = "==4.56.2" },
+    { name = "trl", specifier = ">=0.23.0" },
     { name = "unsloth", specifier = ">=2025.11.2" },
     { name = "vllm", specifier = ">=0.11.0" },
 ]
