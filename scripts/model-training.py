@@ -365,7 +365,7 @@ def get_length_reward(original, compressed):
     return r
     
 
-def calculate_rewards(prompts, completions, alpha: float = 1.0, **kwargs):
+def calculate_rewards(prompts, completions, alpha: float = 0.90, **kwargs):
     chunk = prompts[0][-1]["content"]
     responses = [completion[0]["content"] for completion in completions]
 
@@ -393,7 +393,7 @@ def calculate_rewards(prompts, completions, alpha: float = 1.0, **kwargs):
 # In[18]:
 
 
-max_prompt_length = 784
+max_prompt_length = 1024
 max_completion_length = max_seq_length - max_prompt_length
 
 from vllm import SamplingParams
@@ -423,16 +423,16 @@ training_args = GRPOConfig(
     max_completion_length = max_completion_length,
     # num_train_epochs = 1, # Set to 1 for a full training run
     max_steps = 1500,
-    save_steps = 300,
+    save_steps = 50,
     report_to = "none", # Can use Weights & Biases
-    output_dir = "/hpc/home/bfa6/work/github/yapper/results/test3/output",
+    output_dir = "/hpc/home/bfa6/work/github/yapper/results/test5/output",
 
     # For optional training + evaluation
     fp16_full_eval = True,
     per_device_eval_batch_size = 4,
     eval_accumulation_steps = 1,
     eval_strategy = "steps",
-    eval_steps = 300,
+    eval_steps = 50,
 )
 
 
@@ -459,7 +459,7 @@ trainer.train()
 
 
 # In[ ]:
-model.save_lora("/hpc/home/bfa6/work/github/yapper/results/test3/save") 
+model.save_lora("/hpc/home/bfa6/work/github/yapper/results/test5/save") 
 
 
 

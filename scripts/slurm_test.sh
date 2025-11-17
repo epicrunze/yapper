@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -p scavenger-gpu
-#SBATCH --gres=gpu:5000_ada:1
+#SBATCH --gres=gpu:6000_ada:1
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=baraa.abed@duke.edu
 #SBATCH --mem=64G
