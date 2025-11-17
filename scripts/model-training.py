@@ -40,7 +40,7 @@ config = dotenv_values("../.env")
 # In[2]:
 
 
-max_seq_length = 3096 # Can increase for longer reasoning traces
+max_seq_length = 2048 # Can increase for longer reasoning traces
 lora_rank = 32 # Larger rank = smarter, but slower
 
 model, tokenizer = FastLanguageModel.from_pretrained(
