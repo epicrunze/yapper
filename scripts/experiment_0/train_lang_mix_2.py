@@ -78,7 +78,7 @@ model = FastLanguageModel.get_peft_model(
 
 system_prompt = (
     "Your goal is to compress the information from the user in as few tokens as necessary and output the compressed version.\n"
-    "Translate to different languages to compress the information. For example if the user is speaking English you can compress the information in Chinese and output Chinese\n"
+    "Translate to different languages to compress the information.\n"
     "Do NOT produce internal chain-of-thought or step-by-step reasoning.\n"
     "Start immediately with the compressed content (no extra preface)."
 )
@@ -474,7 +474,7 @@ training_args = GRPOConfig(
     max_steps = 100,
     save_steps = 10,
     report_to = "none", # Can use Weights & Biases
-    output_dir = ROOT + "/" + "results/experiment_0/test1/output",
+    output_dir = ROOT + "/" + "results/experiment_0/test2/output",
 
     # For optional training + evaluation
     # fp16_full_eval = True,
@@ -508,7 +508,7 @@ trainer.train()
 
 
 # In[ ]:
-model.save_lora(ROOT + "/" + "results/experiment_0/test1/save") 
+model.save_lora(ROOT + "/" + "results/experiment_0/test2/save") 
 
 
 

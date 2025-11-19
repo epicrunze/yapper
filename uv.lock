@@ -2371,6 +2371,15 @@ wheels = [
 ]
 
 [[package]]
+name = "langid"
+version = "1.1.6"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ea/4c/0fb7d900d3b0b9c8703be316fbddffecdab23c64e1b46c7a83561d78bd43/langid-1.1.6.tar.gz", hash = "sha256:044bcae1912dab85c33d8e98f2811b8f4ff1213e5e9a9e9510137b84da2cb293", size = 1925978, upload-time = "2016-04-05T22:34:15.786Z" }
+
+[[package]]
 name = "lark"
 version = "1.2.2"
 source = { registry = "https://pypi.org/simple" }
@@ -6787,6 +6796,7 @@ dependencies = [
     { name = "duckdb" },
     { name = "google-genai" },
     { name = "jupyter" },
+    { name = "langid" },
     { name = "matplotlib" },
     { name = "mwparserfromhell" },
     { name = "nltk" },
@@ -6811,6 +6821,7 @@ requires-dist = [
     { name = "duckdb", specifier = ">=1.4.1" },
     { name = "google-genai", specifier = ">=1.49.0" },
     { name = "jupyter", specifier = ">=1.1.1" },
+    { name = "langid", specifier = ">=1.1.6" },
     { name = "matplotlib", specifier = ">=3.10.7" },
     { name = "mwparserfromhell", specifier = ">=0.7.2" },
     { name = "nltk", specifier = ">=3.9.2" },
