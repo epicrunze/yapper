@@ -212,4 +212,6 @@ __marimo__/
 
 
 # Books 
-dataset/*.txt
+*/dataset/*.txt
+dataset/*/*.txt
+*/results/

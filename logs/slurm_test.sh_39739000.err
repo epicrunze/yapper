@@ -1,3 +1,0 @@
-/work/bfa6/github/yapper/.venv/lib/python3.10/site-packages/transformers/utils/hub.py:111: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
-  warnings.warn(
-slurmstepd: error: *** JOB 39739000 ON dcc-wrapplab-gpu-01 CANCELLED AT 2025-11-14T23:45:30 ***
