@@ -14,7 +14,7 @@ import numpy as np
 max_seq_length = 2048 
 DATASET_PATH = "/hpc/home/bfa6/work/github/yapper/dataset/splits.json"
 SEED = 42
-RESULTS_PATH = "/hpc/home/bfa6/work/github/yapper/experiments/experiement1_baselines/results/qwen_eval.json"
+RESULTS_PATH = "/hpc/home/bfa6/work/github/yapper/experiments/experiment1_baselines/results/qwen_eval.json"
 
 def set_seed(seed):
     random.seed(seed)
@@ -51,8 +51,7 @@ prompt_template = """Context:
 
 Now here is the question:
 {question}
-
-Respond ONLY with yes or no."""
+"""
 
 for sample in testset:
     for qa in sample["QAs"]:
@@ -66,12 +65,18 @@ random.Random(SEED).shuffle(testset_prompts)
 
 # Yes/No Grader
 def check_answer(predicted: str, true: str):
-    return predicted.strip().lower() == true.strip().lower()
+    def normalize(s: str):
+        return s.strip().lower().removesuffix('.')
+    
+    return normalize(predicted) == normalize(true)
 
 # System prompt
-system_prompt = """You will be given some context and a Yes/No question that can be answered from the context.
-Your job is to answer the question. You can only answer with "yes" or "no". Anything else will be considered incorrect.
-I repeat, answer with only "yes" or "no"."""
+system_prompt = (
+    "You will be given some context and a Yes/No question that can be answered from the context.\n"
+    "Your job is to answer the question. You can only answer with \"yes\", \"no\", or \"idk\". Anything else will be considered incorrect.\n"
+    "I repeat, answer with only \"yes\", \"no\", or \"idk\"."
+    "Answer with \"idk\" if you can't extract the answer from the context."
+)
 
 # Evaluation loop
 results = []

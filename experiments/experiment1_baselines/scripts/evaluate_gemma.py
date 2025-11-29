@@ -78,7 +78,7 @@ results = []
 correct = 0
 total = 0
 
-for sample in tqdm(testset_prompts[:1], desc="Evaluating"):
+for sample in tqdm(testset_prompts, desc="Evaluating"):
     messages = [
         {"role": "system", "content": [{"type": "text", "text": system_prompt}]},
         {"role": "user", "content": [{"type": "text", "text": sample["prompt"]}]}
