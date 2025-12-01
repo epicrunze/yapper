@@ -1,0 +1,15 @@
+slurmstepd: error: Failed to get device handle for GPU 0: Unknown Error
+slurmstepd: error: Failed to get device handle for GPU 0: Unknown Error
+Traceback (most recent call last):
+  File "/hpc/home/bfa6/work/github/yapper/experiments/experiment3_lambda_normal/scripts/eval_qwen.py", line 10, in <module>
+    from unsloth import FastLanguageModel
+  File "/work/bfa6/github/yapper/.venv/lib/python3.10/site-packages/unsloth/__init__.py", line 80, in <module>
+    import unsloth_zoo
+  File "/work/bfa6/github/yapper/.venv/lib/python3.10/site-packages/unsloth_zoo/__init__.py", line 136, in <module>
+    from .device_type import (
+  File "/work/bfa6/github/yapper/.venv/lib/python3.10/site-packages/unsloth_zoo/device_type.py", line 56, in <module>
+    DEVICE_TYPE : str = get_device_type()
+  File "/work/bfa6/github/yapper/.venv/lib/python3.10/site-packages/unsloth_zoo/device_type.py", line 46, in get_device_type
+    raise NotImplementedError("Unsloth cannot find any torch accelerator? You need a GPU.")
+NotImplementedError: Unsloth cannot find any torch accelerator? You need a GPU.
+slurmstepd: error: Failed to get device handle for GPU 0: Unknown Error

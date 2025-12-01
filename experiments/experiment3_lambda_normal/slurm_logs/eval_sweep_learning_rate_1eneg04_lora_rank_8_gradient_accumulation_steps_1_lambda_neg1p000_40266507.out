@@ -1,0 +1,75 @@
+🦥 Unsloth: Will patch your computer to enable 2x faster free finetuning.
+INFO 11-30 16:03:48 [__init__.py:216] Automatically detected platform cuda.
+🦥 Unsloth Zoo will now patch everything to make training faster!
+Auto-detected experiment name: sweep_learning_rate_1eneg04_lora_rank_8_gradient_accumulation_steps_1_lambda_neg1p000
+Loaded from metadata: lambda_qa=-1.0, num_qa_samples=2
+Loading model...
+INFO 11-30 16:04:03 [vllm_utils.py:700] Unsloth: Patching vLLM v1 graph capture
+==((====))==  Unsloth 2025.11.2: Fast Qwen3 patching. Transformers: 4.56.2. vLLM: 0.11.0.
+   \\   /|    NVIDIA RTX 6000 Ada Generation. Num GPUs = 1. Max memory: 47.372 GB. Platform: Linux.
+O^O/ \_/ \    Torch: 2.8.0+cu128. CUDA: 8.9. CUDA Toolkit: 12.8. Triton: 3.4.0
+\        /    Bfloat16 = TRUE. FA [Xformers = 0.0.32.post1. FA2 = False]
+ "-____-"     Free license: http://github.com/unslothai/unsloth
+Unsloth: Fast downloading is enabled - ignore downloading bars which are red colored!
+Unsloth: vLLM loading unsloth/Qwen3-4B-Instruct-2507 with actual GPU utilization = 59.41%
+Unsloth: Your GPU has CUDA compute capability 8.9 with VRAM = 47.37 GB.
+Unsloth: Using conservativeness = 1.0. Chunked prefill tokens = 2048. Num Sequences = 288.
+Unsloth: vLLM's KV Cache can use up to 21.08 GB. Also swap space = 6 GB.
+Unsloth: Not an error, but `device` is not supported in vLLM. Skipping.
+INFO 11-30 16:04:06 [utils.py:233] non-default args: {'dtype': torch.bfloat16, 'seed': 0, 'max_model_len': 2048, 'enable_prefix_caching': True, 'swap_space': 6, 'gpu_memory_utilization': 0.5941472125626335, 'max_num_batched_tokens': 2048, 'max_num_seqs': 288, 'max_logprobs': 0, 'disable_log_stats': True, 'enable_lora': True, 'max_lora_rank': 64, 'enable_chunked_prefill': True, 'compilation_config': {"level":3,"debug_dump_path":"","cache_dir":"","backend":"inductor","custom_ops":[],"splitting_ops":null,"use_inductor":true,"compile_sizes":null,"inductor_compile_config":{"epilogue_fusion":true,"max_autotune":false,"shape_padding":true,"trace.enabled":false,"triton.cudagraphs":true,"debug":false,"dce":true,"memory_planning":true,"coordinate_descent_tuning":false,"trace.graph_diagram":false,"compile_threads":25,"group_fusion":true,"disable_progress":false,"verbose_progress":true,"triton.multi_kernel":0,"triton.use_block_ptr":true,"triton.enable_persistent_tma_matmul":true,"triton.autotune_at_compile_time":false,"triton.cooperative_reductions":false,"cuda.compile_opt_level":"-O2","cuda.enable_cuda_lto":true,"combo_kernels":false,"benchmark_combo_kernel":true,"combo_kernel_foreach_dynamic_shapes":true,"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,1],"use_cudagraph":true,"cudagraph_num_of_warmups":1,"cudagraph_capture_sizes":null,"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":null,"local_cache_dir":null}, 'model': 'unsloth/Qwen3-4B-Instruct-2507'}
+INFO 11-30 16:04:06 [model.py:547] Resolved architecture: Qwen3ForCausalLM
+INFO 11-30 16:04:06 [model.py:1510] Using max model len 2048
+INFO 11-30 16:04:09 [scheduler.py:205] Chunked prefill is enabled with max_num_batched_tokens=2048.
+WARNING 11-30 16:04:09 [lora.py:92] `lora_extra_vocab_size` is deprecated and will be removed in v0.12.0. Additional vocabulary support for LoRA adapters is being phased out.
+INFO 11-30 16:04:10 [core.py:77] Initializing a V1 LLM engine (v0.11.0) with config: model='unsloth/Qwen3-4B-Instruct-2507', speculative_config=None, tokenizer='unsloth/Qwen3-4B-Instruct-2507', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=2048, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser=''), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None), seed=0, served_model_name=unsloth/Qwen3-4B-Instruct-2507, enable_prefix_caching=True, chunked_prefill_enabled=True, pooler_config=None, compilation_config={"level":3,"debug_dump_path":"","cache_dir":"","backend":"inductor","custom_ops":[],"splitting_ops":["vllm.unified_attention","vllm.unified_attention_with_output","vllm.mamba_mixer2","vllm.mamba_mixer","vllm.short_conv","vllm.linear_attention","vllm.plamo2_mamba_mixer","vllm.gdn_attention","vllm.sparse_attn_indexer"],"use_inductor":true,"compile_sizes":[],"inductor_compile_config":{"epilogue_fusion":true,"max_autotune":false,"shape_padding":true,"trace.enabled":false,"triton.cudagraphs":true,"debug":false,"dce":true,"memory_planning":true,"coordinate_descent_tuning":false,"trace.graph_diagram":false,"compile_threads":25,"group_fusion":true,"disable_progress":false,"verbose_progress":true,"triton.multi_kernel":0,"triton.use_block_ptr":true,"triton.enable_persistent_tma_matmul":true,"triton.autotune_at_compile_time":false,"triton.cooperative_reductions":false,"cuda.compile_opt_level":"-O2","cuda.enable_cuda_lto":true,"combo_kernels":false,"benchmark_combo_kernel":true,"combo_kernel_foreach_dynamic_shapes":true,"enable_auto_functionalized_v2":false},"inductor_passes":{},"cudagraph_mode":[2,1],"use_cudagraph":true,"cudagraph_num_of_warmups":1,"cudagraph_capture_sizes":[512,504,496,488,480,472,464,456,448,440,432,424,416,408,400,392,384,376,368,360,352,344,336,328,320,312,304,296,288,280,272,264,256,248,240,232,224,216,208,200,192,184,176,168,160,152,144,136,128,120,112,104,96,88,80,72,64,56,48,40,32,24,16,8,4,2,1],"cudagraph_copy_inputs":false,"full_cuda_graph":false,"use_inductor_graph_partition":false,"pass_config":{},"max_capture_size":512,"local_cache_dir":null}
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+[Gloo] Rank 0 is connected to 0 peer ranks. Expected number of connected peer ranks is : 0
+INFO 11-30 16:04:10 [parallel_state.py:1208] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, TP rank 0, EP rank 0
+WARNING 11-30 16:04:10 [topk_topp_sampler.py:66] FlashInfer is not available. Falling back to the PyTorch-native implementation of top-p & top-k sampling. For the best performance, please install FlashInfer.
+INFO 11-30 16:04:11 [gpu_model_runner.py:2602] Starting to load model unsloth/Qwen3-4B-Instruct-2507...
+INFO 11-30 16:04:11 [gpu_model_runner.py:2634] Loading model from scratch...
+INFO 11-30 16:04:11 [cuda.py:366] Using Flash Attention backend on V1 engine.
+INFO 11-30 16:04:12 [weight_utils.py:392] Using model weights format ['*.safetensors']
+INFO 11-30 16:04:14 [default_loader.py:267] Loading weights took 1.69 seconds
+INFO 11-30 16:04:14 [punica_selector.py:19] Using PunicaWrapperGPU.
+INFO 11-30 16:04:15 [gpu_model_runner.py:2653] Model loading took 7.8112 GiB and 2.556712 seconds
+INFO 11-30 16:04:32 [backends.py:548] Using cache directory: /hpc/home/bfa6/.cache/vllm/torch_compile_cache/de90462174/rank_0_0/backbone for vLLM's torch.compile
+INFO 11-30 16:04:32 [backends.py:559] Dynamo bytecode transform time: 16.08 s
+INFO 11-30 16:04:38 [backends.py:164] Directly load the compiled graph(s) for dynamic shape from the cache, took 5.228 s
+INFO 11-30 16:04:40 [monitor.py:34] torch.compile takes 16.08 s in total
+INFO 11-30 16:04:41 [gpu_worker.py:298] Available KV cache memory: 18.74 GiB
+INFO 11-30 16:04:41 [kv_cache_utils.py:1087] GPU KV cache size: 136,464 tokens
+INFO 11-30 16:04:41 [kv_cache_utils.py:1091] Maximum concurrency for 2,048 tokens per request: 66.63x
+INFO 11-30 16:04:41 [vllm_utils.py:705] Unsloth: Running patched vLLM v1 `capture_model`.
+INFO 11-30 16:04:54 [gpu_model_runner.py:3480] Graph capturing finished in 13 secs, took 1.25 GiB
+INFO 11-30 16:04:54 [vllm_utils.py:712] Unsloth: Patched vLLM v1 graph capture finished in 13 secs.
+INFO 11-30 16:04:55 [core.py:210] init engine (profile, create kv cache, warmup model) took 40.64 seconds
+INFO 11-30 16:04:56 [llm.py:306] Supported_tasks: ('generate',)
+Unsloth: Just some info: will skip parsing ['post_feedforward_layernorm', 'layer_norm1', 'norm1', 'norm2', 'attention_norm', 'pre_feedforward_layernorm', 'ffn_norm', 'input_layernorm', 'q_norm', 'layer_norm2', 'post_layernorm', 'norm', 'post_attention_layernorm', 'k_norm']
+Performing substitution for additional_keys=set()
+Unsloth: Just some info: will skip parsing ['post_feedforward_layernorm', 'layer_norm1', 'norm1', 'norm2', 'attention_norm', 'cross_attn_input_layernorm', 'pre_feedforward_layernorm', 'ffn_norm', 'cross_attn_post_attention_layernorm', 'input_layernorm', 'q_norm', 'layer_norm2', 'post_layernorm', 'norm', 'post_attention_layernorm', 'k_norm']
+Loading adapters from /hpc/home/bfa6/work/github/yapper/experiments/experiment3_lambda_normal/results/sweep_learning_rate_1eneg04_lora_rank_8_gradient_accumulation_steps_1_lambda_neg1p000/save...
+Loading dataset from /hpc/home/bfa6/work/github/yapper/dataset/splits.json...
+Starting evaluation...
+
+================================================================================
+Evaluation Results
+================================================================================
+Experiment: sweep_learning_rate_1eneg04_lora_rank_8_gradient_accumulation_steps_1_lambda_neg1p000
+Lambda QA: -1.0
+Num QA Samples (from training): 2
+
+Metrics:
+Average QA Accuracy: 0.2780
+Average Length Reward: 0.9968
+Average Compression Ratio: 314.8475
+Average Overall Reward: -0.4449
+================================================================================
+
+Results saved to /hpc/home/bfa6/work/github/yapper/experiments/experiment3_lambda_normal/results/sweep_learning_rate_1eneg04_lora_rank_8_gradient_accumulation_steps_1_lambda_neg1p000/eval_results.json
+Generating plots...
+Plots saved to /hpc/home/bfa6/work/github/yapper/experiments/experiment3_lambda_normal/results/sweep_learning_rate_1eneg04_lora_rank_8_gradient_accumulation_steps_1_lambda_neg1p000/plots
