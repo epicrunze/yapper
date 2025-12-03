@@ -42,7 +42,7 @@ model, tokenizer = FastLanguageModel.from_pretrained(
 with open(DATASET_PATH, "r", encoding="utf-8") as f:
     data = json.load(f)
 
-testset = data["test"]
+evalset = data["eval"]
 
 # Prepare dataset prompts
 prompt_template = """Context:
@@ -59,8 +59,8 @@ system_prompt = (
     "Start immediately with the compressed content (no extra preface)."
 )
 
-compressed_testset = []
-for sample in tqdm(testset, desc="Generating compressions"):
+compressed_evalset = []
+for sample in tqdm(evalset, desc="Generating compressions"):
     temp = sample.copy()
     
     messages = [
@@ -92,44 +92,32 @@ for sample in tqdm(testset, desc="Generating compressions"):
 
     temp["compressed_chunk"] = output_text
 
-    compressed_testset.append(temp)
+    compressed_evalset.append(temp)
 
-testset_prompts = []
-# QAs Prompts
-for sample in compressed_testset:
-    for qa in sample["QAs"]:
-        new_sample = {
-            "prompt": prompt_template.format(chunk=sample["compressed_chunk"], question=qa["Question"]),
-            "answer": qa["Answer"]
-        }
-        testset_prompts.append(new_sample)
-
-random.Random(SEED).shuffle(testset_prompts)
-
-# Yes/No Grader
+# Helper functions
 def check_answer(predicted: str, true: str):
     def normalize(s: str):
         return s.strip().lower().removesuffix('.')
     
     return normalize(predicted) == normalize(true)
 
-# System prompt
-system_prompt = (
-    "You will be given some context and a Yes/No question that can be answered from the context.\n"
-    "Your job is to answer the question. You can only answer with \"yes\", \"no\", or \"idk\". Anything else will be considered incorrect.\n"
-    "I repeat, answer with only \"yes\", \"no\", or \"idk\"."
-    "Answer with \"idk\" if you can't extract the answer from the context."
-)
+def get_num_tokens(text: str):
+    chunk_tokens = tokenizer(text)
+    return float(len(chunk_tokens["input_ids"]))
 
-# Evaluation loop
-results = []
-correct = 0
-total = 0
+def get_compression_ratio(original, compressed):
+    len_original = get_num_tokens(original)
+    len_compressed = get_num_tokens(compressed)
+    
+    if len_compressed == 0:
+        return 0.0
+        
+    return len_original / len_compressed
 
-for sample in tqdm(testset_prompts, desc="Evaluating"):
+def calculate_qa_reward(chunk: str, question: str, answer: str):
     messages = [
-        {"role": "system", "content": system_prompt},
-        {"role": "user", "content": sample["prompt"]}
+        {"role": "system", "content": qa_system_prompt},
+        {"role": "user", "content": prompt_template.format(chunk=chunk, question=question)}
     ]
 
     text = tokenizer.apply_chat_template(
@@ -154,37 +142,82 @@ for sample in tqdm(testset_prompts, desc="Evaluating"):
     output = outputs[:, inputs["input_ids"].shape[1]:]
     output_text = tokenizer.decode(output[0], skip_special_tokens=True)
 
-    is_correct = check_answer(output_text, sample["answer"])
-    
-    result = {
-        "prompt": sample["prompt"],
-        "true_answer": sample["answer"],
-        "model_response": output_text,
-        "correct": is_correct
-    }
-    
-    results.append(result)
-    
-    if is_correct:
-        correct += 1
-    total += 1
+    is_correct = check_answer(output_text, answer)
+    return is_correct, output_text
 
-# Calculate accuracy
-accuracy = (correct / total) * 100 if total > 0 else 0
+# QA System prompt
+qa_system_prompt = (
+    "You will be given some context and a Yes/No question that can be answered from the context.\n"
+    "Your job is to answer the question. You can only answer with \"yes\", \"no\", or \"idk\". Anything else will be considered incorrect.\n"
+    "I repeat, answer with only \"yes\", \"no\", or \"idk\"."
+    "Answer with \"idk\" if you can't extract the answer from the context."
+)
+
+# Evaluation loop
+print("Starting evaluation...")
+results = []
+qa_accuracies = []
+compression_ratios = []
+
+for sample in tqdm(compressed_evalset, desc="Evaluating"):
+    original_chunk = sample["chunk"]
+    compressed_chunk = sample["compressed_chunk"]
+    qas = sample["QAs"]
+    
+    # Calculate Compression Ratio
+    comp_ratio = get_compression_ratio(original_chunk, compressed_chunk)
+    compression_ratios.append(comp_ratio)
+    
+    # Calculate QA Accuracy (Average over all QAs for this chunk)
+    chunk_qa_correct = 0
+    detailed_qas = []
+    for qa in qas:
+        question = qa["Question"]
+        answer = qa["Answer"]
+        is_correct, predicted_answer = calculate_qa_reward(compressed_chunk, question, answer)
+        
+        if is_correct:
+            chunk_qa_correct += 1
+            
+        detailed_qas.append({
+            "question": question,
+            "true_answer": answer,
+            "predicted_answer": predicted_answer,
+            "is_correct": is_correct
+        })
+            
+    chunk_qa_acc = chunk_qa_correct / len(qas) if qas else 0.0
+    qa_accuracies.append(chunk_qa_acc)
+    
+    results.append({
+        "original": original_chunk,
+        "compressed": compressed_chunk,
+        "compression_ratio": comp_ratio,
+        "qa_accuracy": chunk_qa_acc,
+        "qas": detailed_qas
+    })
+
+# Calculate aggregate metrics
+avg_qa_accuracy = np.mean(qa_accuracies)
+avg_compression_ratio = np.mean(compression_ratios)
+
+print(f"\n{'='*80}")
+print(f"Evaluation Results")
+print(f"{'='*80}")
+print(f"Average QA Accuracy: {avg_qa_accuracy:.4f}")
+print(f"Average Compression Ratio: {avg_compression_ratio:.4f}")
+print(f"{'='*80}\n")
 
 # Prepare final output
 final_results = {
-    "accuracy": accuracy,
-    "correct": correct,
-    "total": total,
-    "results": results
+    "avg_qa_accuracy": avg_qa_accuracy,
+    "avg_compression_ratio": avg_compression_ratio,
+    "details": results
 }
 
 # Save results
 with open(RESULTS_PATH, "w", encoding="utf-8") as f:
     json.dump(final_results, f, indent=2, ensure_ascii=False)
 
-print(f"\nEvaluation Complete!")
-print(f"Accuracy: {accuracy:.2f}%")
-print(f"Correct: {correct}/{total}")
+print(f"Evaluation Complete!")
 print(f"Results saved to: {RESULTS_PATH}")

@@ -1,9 +1,5 @@
 import os
 from pathlib import Path
-
-os.environ["TRANSFORMERS_CACHE"] = "/hpc/home/bfa6/work/llms/.cache"
-os.environ["HF_HOME"] = "/hpc/home/bfa6/work/llms/.cache"
-
 import json
 import torch
 from unsloth import FastLanguageModel
@@ -17,9 +13,9 @@ import seaborn as sns
 max_seq_length = 2048
 YAPPER_DIR = Path("/hpc/home/bfa6/work/github/yapper")
 DATASET_PATH = YAPPER_DIR / "dataset/splits.json"
-BASE_PATH = YAPPER_DIR / "experiments/experiment3_lambda_normal"
+BASE_PATH = YAPPER_DIR / "experiments/experiment2_normal_run"
 RESULTS_PATH = BASE_PATH / "results"
-EXPERIMENT_NAME = "sweep_learning_rate_1eneg04_lora_rank_16_gradient_accumulation_steps_4_lambda_neg1p000"
+EXPERIMENT_NAME = "test1"
 EXPERIMENT_DIR = RESULTS_PATH / EXPERIMENT_NAME
 SAVE_PATH = EXPERIMENT_DIR / "save"
 PLOTS_DIR = EXPERIMENT_DIR / "plots"
@@ -124,21 +120,11 @@ def get_length_reward(original, compressed):
     r = (len_original - len_compressed) * (1/len_original)
     return r
 
-def get_compression_ratio(original, compressed):
-    len_original = get_num_tokens(original)
-    len_compressed = get_num_tokens(compressed)
-    
-    if len_compressed == 0:
-        return 0.0
-        
-    return len_original / len_compressed
-
 # Evaluation Loop
 print("Starting evaluation...")
 results = []
 qa_accuracies = []
 length_rewards = []
-compression_ratios = []
 
 FastLanguageModel.for_inference(model)
 
@@ -194,16 +180,10 @@ for sample in tqdm(test_data):
             
     chunk_qa_acc = chunk_qa_correct / len(qas) if qas else 0.0
     qa_accuracies.append(chunk_qa_acc)
-
-    # Calculate Compression Ratio
-    comp_ratio = get_compression_ratio(original_chunk, compressed_chunk)
-    compression_ratios.append(comp_ratio)
-
     
     results.append({
         "original": original_chunk,
         "compressed": compressed_chunk,
-        "compression_ratio": comp_ratio,
         "length_reward": len_reward,
         "qa_accuracy": chunk_qa_acc,
         "qas": detailed_qas
@@ -212,11 +192,9 @@ for sample in tqdm(test_data):
 # Calculate aggregate metrics
 avg_qa_accuracy = np.mean(qa_accuracies)
 avg_length_reward = np.mean(length_rewards)
-avg_compression_ratio = np.mean(compression_ratios)
 
 print(f"Average QA Accuracy: {avg_qa_accuracy:.4f}")
 print(f"Average Length Reward: {avg_length_reward:.4f}")
-print(f"Average Compression Ratio: {avg_compression_ratio:.4f}")
 
 # Save results
 results_file = EXPERIMENT_DIR / "test_results.json"
@@ -224,7 +202,6 @@ with open(results_file, "w") as f:
     json.dump({
         "avg_qa_accuracy": avg_qa_accuracy,
         "avg_length_reward": avg_length_reward,
-        "avg_compression_ratio": avg_compression_ratio,
         "details": results
     }, f, indent=4)
 print(f"Results saved to {results_file}")

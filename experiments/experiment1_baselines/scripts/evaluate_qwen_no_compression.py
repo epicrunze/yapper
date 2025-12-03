@@ -42,10 +42,10 @@ model, tokenizer = FastLanguageModel.from_pretrained(
 with open(DATASET_PATH, "r", encoding="utf-8") as f:
     data = json.load(f)
 
-testset = data["test"]
+evalset = data["eval"]
 
 # Prepare dataset prompts
-testset_prompts = []
+evalset_prompts = []
 prompt_template = """Context:
 {chunk}
 
@@ -53,15 +53,15 @@ Now here is the question:
 {question}
 """
 
-for sample in testset:
+for sample in evalset:
     for qa in sample["QAs"]:
         new_sample = {
             "prompt": prompt_template.format(chunk=sample["chunk"], question=qa["Question"]),
             "answer": qa["Answer"]
         }
-        testset_prompts.append(new_sample)
+        evalset_prompts.append(new_sample)
 
-random.Random(SEED).shuffle(testset_prompts)
+random.Random(SEED).shuffle(evalset_prompts)
 
 # Yes/No Grader
 def check_answer(predicted: str, true: str):
@@ -83,7 +83,7 @@ results = []
 correct = 0
 total = 0
 
-for sample in tqdm(testset_prompts, desc="Evaluating"):
+for sample in tqdm(evalset_prompts, desc="Evaluating"):
     messages = [
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": sample["prompt"]}

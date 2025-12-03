@@ -55,3 +55,21 @@ Unsloth: Just some info: will skip parsing ['input_layernorm', 'pre_feedforward_
 Loading adapters from /hpc/home/bfa6/work/github/yapper/experiments/experiment3_lambda_normal/results/sweep_learning_rate_1eneg04_lora_rank_32_gradient_accumulation_steps_4_lambda_neg0p800/save...
 Loading dataset from /hpc/home/bfa6/work/github/yapper/dataset/splits.json...
 Starting evaluation...
+
+================================================================================
+Evaluation Results
+================================================================================
+Experiment: sweep_learning_rate_1eneg04_lora_rank_32_gradient_accumulation_steps_4_lambda_neg0p800
+Lambda QA: -0.8
+Num QA Samples (from training): 2
+
+Metrics:
+Average QA Accuracy: 0.0000
+Average Length Reward: -2.2767
+Average Compression Ratio: 0.3079
+Average Overall Reward: -0.8000
+================================================================================
+
+Results saved to /hpc/home/bfa6/work/github/yapper/experiments/experiment3_lambda_normal/results/sweep_learning_rate_1eneg04_lora_rank_32_gradient_accumulation_steps_4_lambda_neg0p800/eval_results.json
+Generating plots...
+Plots saved to /hpc/home/bfa6/work/github/yapper/experiments/experiment3_lambda_normal/results/sweep_learning_rate_1eneg04_lora_rank_32_gradient_accumulation_steps_4_lambda_neg0p800/plots
