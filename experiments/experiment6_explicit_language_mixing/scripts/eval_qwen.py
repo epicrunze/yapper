@@ -79,7 +79,7 @@ PLOTS_DIR.mkdir(parents=True, exist_ok=True)
 # Prompts
 train_system_prompt = (
     "Your goal is to compress the information from the user in as few tokens as necessary and output the compressed version.\n"
-    "Hint: Using different languages might help in this task.\n"
+    "Use different languages to tokenize more efficiently.\n"
     "Do NOT produce internal chain-of-thought or step-by-step reasoning.\n"
     "Start immediately with the compressed content (no extra preface)."
 )

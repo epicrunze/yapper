@@ -79,7 +79,7 @@ PLOTS_DIR.mkdir(parents=True, exist_ok=True)
 # Prompts
 train_system_prompt = (
     "Your goal is to compress the information from the user in as few tokens as necessary and output the compressed version.\n"
-    "Hint: Using different languages might help in this task.\n"
+    "Use different languages to tokenize more efficiently.\n"
     "Do NOT produce internal chain-of-thought or step-by-step reasoning.\n"
     "Start immediately with the compressed content (no extra preface)."
 )
@@ -221,7 +221,7 @@ def calculate_overall_reward(original, compressed, qa_accuracy):
     reward = qa_accuracy * r_len + (1 - qa_accuracy) * lambda_qa
     """
     r_len = get_length_reward(original, compressed)
-    r_multi = get_multilingual_reward(response)
+    r_multi = get_multilingual_reward(compressed)
     reward = qa_accuracy * (r_len + r_multi) / 2 + (1 - qa_accuracy) * lambda_qa
     return reward
 
