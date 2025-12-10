@@ -6992,6 +6992,7 @@ dependencies = [
     { name = "nltk" },
     { name = "numpy" },
     { name = "pandas" },
+    { name = "python-dotenv" },
     { name = "python-slugify" },
     { name = "scikit-learn" },
     { name = "seaborn" },
@@ -7005,6 +7006,7 @@ dependencies = [
     { name = "unicodedataplus" },
     { name = "unsloth" },
     { name = "vllm" },
+    { name = "websockets" },
 ]
 
 [package.metadata]
@@ -7021,6 +7023,7 @@ requires-dist = [
     { name = "nltk", specifier = ">=3.9.2" },
     { name = "numpy", specifier = ">=2.2.6" },
     { name = "pandas", specifier = ">=2.3.3" },
+    { name = "python-dotenv", specifier = ">=1.2.1" },
     { name = "python-slugify", specifier = ">=8.0.4" },
     { name = "scikit-learn", specifier = ">=1.7.2" },
     { name = "seaborn", specifier = ">=0.13.2" },
@@ -7034,6 +7037,7 @@ requires-dist = [
     { name = "unicodedataplus", specifier = ">=16.0.0.post1" },
     { name = "unsloth", specifier = ">=2025.11.2" },
     { name = "vllm", specifier = ">=0.11.0" },
+    { name = "websockets", specifier = ">=15.0.1" },
 ]
 
 [[package]]
